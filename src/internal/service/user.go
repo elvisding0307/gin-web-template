@@ -19,10 +19,21 @@ func RegisterService(username, password string) (uint64, errors.SrvErr) {
 		return 0, errors.ErrUserAlreadyExists
 	}
 
+	// Check if this is the first user
+	var userCount int64
+	db.Model(&model.User{}).Count(&userCount)
+	
+	// Set permission: first user becomes admin, others become regular users
+	permission := "user"
+	if userCount == 0 {
+		permission = "admin"
+	}
+
 	// Create new user
 	newUser := model.User{
-		Username: username,
-		Password: password,
+		Username:   username,
+		Password:   password,
+		Permission: permission,
 	}
 
 	if err := db.Create(&newUser).Error; err != nil {

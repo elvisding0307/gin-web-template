@@ -166,52 +166,6 @@ const docTemplate = `{
                     }
                 }
             }
-        },
-        "/user/password": {
-            "post": {
-                "description": "用户修改密码接口",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "用户"
-                ],
-                "summary": "修改密码",
-                "parameters": [
-                    {
-                        "description": "修改密码请求",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/handler.changePasswordRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/handler.Response"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/handler.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/handler.Response"
-                        }
-                    }
-                }
-            }
         }
     },
     "definitions": {
@@ -224,23 +178,6 @@ const docTemplate = `{
                 "data": {},
                 "msg": {
                     "type": "string"
-                }
-            }
-        },
-        "handler.changePasswordRequest": {
-            "type": "object",
-            "properties": {
-                "new_password": {
-                    "type": "string",
-                    "example": "new_password456"
-                },
-                "old_password": {
-                    "type": "string",
-                    "example": "old_password123"
-                },
-                "user_id": {
-                    "type": "integer",
-                    "example": 1
                 }
             }
         },
@@ -285,7 +222,7 @@ var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
 	Host:             "localhost:4387",
 	BasePath:         "/api/v1",
-	Schemes:          []string{},
+	Schemes:          []string{"http"},
 	Title:            "gin-web-template",
 	Description:      "gin-web-template",
 	InfoInstanceName: "swagger",

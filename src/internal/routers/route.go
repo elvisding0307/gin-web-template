@@ -28,7 +28,6 @@ func CreateRouter() *gin.Engine {
 		v1Group.GET("/hello", handler.HelloHandler)
 		v1Group.POST("/sessions", handler.LoginHandler)
 		v1Group.POST("/user", handler.RegisterHandler)
-		v1Group.POST("/user/password", handler.ChangePasswordHandler)
 	}
 
 	// 需要JWT验证的API路由组

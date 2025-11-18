@@ -1,8 +1,8 @@
 package model
 
 type Hello struct {
-	Id        uint64 `json:"id" gorm:"autoIncrement;primaryKey"`
-	HelloWord string `json:"hello_word"`
+	Id      uint64 `json:"id" gorm:"autoIncrement;primaryKey"`
+	Content string `json:"content"`
 }
 
 // TableName 指定表名

@@ -24,11 +24,13 @@ func InitMysqlDB() error {
 	onceMysqlInitilization.Do(func() {
 		if cfg, err = config.ServerConfig(); err != nil {
 			log.Println("无法获取服务器配置: ", err)
+			return 
 		}
 		dsn := cfg.GetMysqlDSN()
 		db, err := connect(dsn)
 		if err != nil {
 			log.Println("Mysql数据库连接失败: ", err)
+			return
 		}
 
 		log.Println("Mysql数据库连接成功")
@@ -36,6 +38,7 @@ func InitMysqlDB() error {
 		err = autoMigrateModels(db)
 		if err != nil {
 			log.Println("数据库模型迁移失败: ", err)
+			return 
 		}
 	})
 
