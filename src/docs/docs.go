@@ -183,6 +183,10 @@ const docTemplate = `{
         },
         "handler.loginRequest": {
             "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
             "properties": {
                 "password": {
                     "type": "string",
@@ -196,6 +200,10 @@ const docTemplate = `{
         },
         "handler.registerRequest": {
             "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
             "properties": {
                 "password": {
                     "type": "string",

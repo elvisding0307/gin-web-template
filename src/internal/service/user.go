@@ -9,20 +9,20 @@ import (
 func RegisterService(username, password string) (uint64, errors.SrvErr) {
 	db, err := dao.GetMysqlInstance()
 	if err != nil {
-		return 0, errors.ErrDatabaseConnection
+		return 0, errors.DatabaseConnectionError
 	}
 
 	// Check if user already exists
 	var existingUser model.User
 	if err := db.Where("username = ?", username).First(&existingUser).Error; err == nil {
 		// User already exists
-		return 0, errors.ErrUserAlreadyExists
+		return 0, errors.UserAlreadyExistsError
 	}
 
 	// Check if this is the first user
 	var userCount int64
 	db.Model(&model.User{}).Count(&userCount)
-	
+
 	// Set permission: first user becomes admin, others become regular users
 	permission := "user"
 	if userCount == 0 {
@@ -37,7 +37,7 @@ func RegisterService(username, password string) (uint64, errors.SrvErr) {
 	}
 
 	if err := db.Create(&newUser).Error; err != nil {
-		return 0, errors.ErrRegistrationFailed
+		return 0, errors.RegistrationFailedError
 	}
 
 	return newUser.UserId, nil
@@ -46,24 +46,24 @@ func RegisterService(username, password string) (uint64, errors.SrvErr) {
 func ChangePasswordService(userId uint64, oldPassword, newPassword string) errors.SrvErr {
 	db, err := dao.GetMysqlInstance()
 	if err != nil {
-		return errors.ErrDatabaseConnection
+		return errors.DatabaseConnectionError
 	}
 
 	// Find user by user ID
 	var user model.User
 	if err := db.Where("user_id = ?", userId).First(&user).Error; err != nil {
-		return errors.ErrUserNotFound
+		return errors.UserNotFoundError
 	}
 
 	// Check if old password matches
 	if user.Password != oldPassword {
-		return errors.ErrInvalidCredentials
+		return errors.InvalidCredentialsError
 	}
 
 	// Update password
 	user.Password = newPassword
 	if err := db.Save(&user).Error; err != nil {
-		return errors.ErrRegistrationFailed
+		return errors.RegistrationFailedError
 	}
 
 	return nil

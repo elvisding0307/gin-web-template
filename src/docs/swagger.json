@@ -180,6 +180,10 @@
         },
         "handler.loginRequest": {
             "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
             "properties": {
                 "password": {
                     "type": "string",
@@ -193,6 +197,10 @@
         },
         "handler.registerRequest": {
             "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
             "properties": {
                 "password": {
                     "type": "string",

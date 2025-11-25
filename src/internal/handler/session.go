@@ -10,8 +10,8 @@ import (
 
 // loginRequest defines the required fields for user login
 type loginRequest struct {
-	Username string `json:"username" example:"john_doe"`
-	Password string `json:"password" example:"password123"`
+	Username string `json:"username" binding:"required" example:"john_doe"`
+	Password string `json:"password" binding:"required" example:"password123"`
 }
 
 // LoginHandler godoc
@@ -29,7 +29,7 @@ func LoginHandler(c *gin.Context) {
 	var req loginRequest
 	// Bind JSON request data
 	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, NewErrorResponse(errors.ErrParseRequest))
+		c.JSON(http.StatusBadRequest, NewErrorResponse(errors.InvalidRequestError))
 		return
 	}
 

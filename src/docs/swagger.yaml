@@ -16,6 +16,9 @@ definitions:
       username:
         example: john_doe
         type: string
+    required:
+    - password
+    - username
     type: object
   handler.registerRequest:
     properties:
@@ -25,6 +28,9 @@ definitions:
       username:
         example: john_doe
         type: string
+    required:
+    - password
+    - username
     type: object
 host: localhost:4387
 info:

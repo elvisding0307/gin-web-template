@@ -10,8 +10,8 @@ import (
 
 // registerRequest defines the required fields for user registration
 type registerRequest struct {
-	Username string `json:"username" example:"john_doe"`
-	Password string `json:"password" example:"password123"`
+	Username string `json:"username" binding:"required" example:"john_doe"`
+	Password string `json:"password" binding:"required" example:"password123"`
 }
 
 // RegisterHandler godoc
@@ -29,7 +29,7 @@ func RegisterHandler(c *gin.Context) {
 	var req registerRequest
 
 	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, NewErrorResponse(errors.ErrInvalidCredentials))
+		c.JSON(http.StatusBadRequest, NewErrorResponse(errors.InvalidRequestError))
 		return
 	}
 

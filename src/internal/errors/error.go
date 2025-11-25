@@ -30,3 +30,8 @@ func NewServerError(code int, msg string) *ServerError {
 		message: msg,
 	}
 }
+
+const (
+	COMMON_ERROR_CODE = 10000 + iota*100
+	SESSION_ERROR_CODE
+)

@@ -16,26 +16,26 @@ func LoginService(username, password string) (interface{}, errors.SrvErr) {
 	// Get database instance
 	db, err := dao.GetMysqlInstance()
 	if err != nil {
-		return nil, errors.ErrDatabaseConnection
+		return nil, errors.DatabaseConnectionError
 	}
 
 	// Find user by username
 	var user model.User
 	if err := db.Where("username = ?", username).First(&user).Error; err != nil {
 		// We return a generic error to prevent username enumeration attacks
-		return nil, errors.ErrUserNotFound
+		return nil, errors.UserNotFoundError
 	}
 
 	// Compare hashed password
 	if user.Password != password {
-		return nil, errors.ErrInvalidCredentials
+		return nil, errors.InvalidCredentialsError
 	}
 
 	// Generate a simple token (in production, use JWT or proper session management)
 	token, err := generateToken(user.UserId)
 
 	if err != nil {
-		return nil, errors.ErrTokenGeneration
+		return nil, errors.TokenGenerationError
 	}
 
 	// Return user data without sensitive information
@@ -64,7 +64,7 @@ func generateToken(userID uint64) (string, error) {
 	// Sign the token with the secret key
 	tokenString, err := token.SignedString([]byte(cfg.ServerSecretKey))
 	if err != nil {
-		return "", errors.ErrTokenGeneration
+		return "", err
 	}
 
 	return tokenString, nil

@@ -11,5 +11,5 @@ type User struct {
 
 // TableName 指定表名
 func (User) TableName() string {
-	return "user_auth"
+	return "user"
 }
