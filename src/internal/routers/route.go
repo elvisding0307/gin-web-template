@@ -15,6 +15,7 @@ import (
 func CreateRouter() *gin.Engine {
 	r := gin.Default()
 	r.Use(middlewares.Cors())
+	r.Static("/static", "./static")
 	r.GET("/", func(c *gin.Context) { c.String(http.StatusOK, "hello") })
 
 	// Swagger路由

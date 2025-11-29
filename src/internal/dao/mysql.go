@@ -27,7 +27,8 @@ func InitMysqlDB() error {
 			return 
 		}
 		dsn := cfg.GetMysqlDSN()
-		db, err := connect(dsn)
+		var db *gorm.DB
+		db, err = connect(dsn)
 		if err != nil {
 			log.Println("Mysql数据库连接失败: ", err)
 			return
